@@ -24,7 +24,7 @@ def send_mail():
 	if result[0]['status'] != 'sent':
 		abort(500)
 
-	return bottle.redirect('http://jgwil2.github.io/contact/thanks.html')
+	return bottle.redirect('http://jgwil2.github.io/contact/thanks')
 
 bottle.debug(True)
 bottle.run(host='0.0.0.0', port=int(os.environ.get('PORT',5000)))
