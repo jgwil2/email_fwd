@@ -1,10 +1,15 @@
 import bottle
+from bottle import hook, response
 import cgi
 import re
 import mandrill
 import os
 
 mandrill_client = mandrill.Mandrill('a0ofkf1HNIwYt2P0CZ-CYQ')
+
+@hook('after_request')
+def enable_cors():
+	response.headers['Access-Control-Allow-Origin'] = '*'
 
 @bottle.post('/')
 def send_mail():
@@ -24,7 +29,7 @@ def send_mail():
 	if result[0]['status'] != 'sent':
 		abort(500)
 
-	return bottle.redirect('http://jgwil2.github.io/contact/thanks')
+	return {'message': 'Thank you! Your message has been sent succesfully.'}
 
 bottle.debug(True)
 bottle.run(host='0.0.0.0', port=int(os.environ.get('PORT',5000)))
